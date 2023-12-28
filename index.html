@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aux Delice</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <style>
+        /* external css: flickity.css */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        .carousel {
+            margin: 1%;
+        }
+
+        .hero {
+            background-image: url('images/hero.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top;
+        }
+
+        .carousel-cell {
+            width: 90%;
+            height: 500px;
+            border-radius: 5px;
+            counter-increment: gallery-cell;
+        }
+
+        /* cell number */
+        .carousel-cell:before {
+            display: block;
+            text-align: center;
+            line-height: 200px;
+            font-size: 80px;
+            color: #F59E0B;
+        }
+        #scrollToTopButton {
+            position: fixed;
+            bottom: 70px;
+            right: 30px;
+            transition: all 2s ease-in-out;
+            /* Add more styles as needed */
+        }
+
+        /* big buttons, no circle */
+        .flickity-prev-next-button {
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: solid 2px #F59E0B;
+        }
+
+        /* arrow color */
+        .flickity-prev-next-button .arrow {
+            fill: #F59E0B;
+        }
+
+        .flickity-prev-next-button.no-svg {
+            color: white;
+        }
+
+        .flickity-prev-next-button:hover {
+            background: transparent;
+        }
+
+        /* hide disabled button */
+        .flickity-prev-next-button:disabled {
+            display: none;
+        }
+
+        .flickity-page-dots {
+            bottom: 0px;
+            fill: #F59E0B;
+        }
+
+        .text-image {
+            font-weight: bold;
+            color: transparent; /* Set text color to transparent */
+            background-image: url('images/ubuki.png'); /* Replace with your image path */
+        background-size: cover; /* Adjust as needed */
+        background-clip: text;
+        }
+    </style>
+</head>
+<body class="antialiased tw-transition-all">
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-0">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="images/logo.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-lg-5 d-flex justify-content-between tw-gap-x-3">
+                    <li class="nav-item active py-3">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item py-lg-3">
+                        <a class="nav-link " href="#about_us">About Us</a>
+                    </li>
+                    <li class="nav-item py-lg-3">
+                        <a class="nav-link " href="#products">Products</a>
+                    </li>
+                    <li class="nav-item py-lg-3">
+                        <a class="nav-link  " href="#shop">Shop</a>
+                    </li>
+                    <li class="nav-item py-lg-3">
+                        <a class="nav-link  " href="#hero">Gallery</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav d-flex align-items-center ml-auto  tw-gap-x-3">
+                    <li class="nav-item align-items-center d-flex py-lg-3">
+                        <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M3.89583 8.73958C5.39583 11.6875 7.8125 14.1042 10.7604 15.6042L13.0521 13.3125C13.3438 13.0208 13.75 12.9375 14.1146 13.0521C15.2812 13.4375 16.5312 13.6458 17.8333 13.6458C18.1096 13.6458 18.3746 13.7556 18.5699 13.9509C18.7653 14.1463 18.875 14.4112 18.875 14.6875V18.3333C18.875 18.6096 18.7653 18.8746 18.5699 19.0699C18.3746 19.2653 18.1096 19.375 17.8333 19.375C13.1368 19.375 8.63261 17.5093 5.31165 14.1883C1.99069 10.8674 0.125 6.36321 0.125 1.66667C0.125 1.3904 0.234747 1.12545 0.430097 0.930097C0.625447 0.734747 0.890399 0.625 1.16667 0.625H4.8125C5.08877 0.625 5.35372 0.734747 5.54907 0.930097C5.74442 1.12545 5.85417 1.3904 5.85417 1.66667C5.85417 2.96875 6.0625 4.21875 6.44792 5.38542C6.5625 5.75 6.47917 6.15625 6.1875 6.44792L3.89583 8.73958Z"
+                                    fill="#042F1A"/>
+                        </svg>
+                        <span class="text-success  ml-2">+250781231231</span>
+                    </li>
+                    <li class="nav-item align-items-center d-flex py-lg-3">
+                        <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M18.8333 1.70834H2.16667C1.59137 1.70834 1.125 2.17471 1.125 2.75001V15.25C1.125 15.8253 1.59137 16.2917 2.16667 16.2917H18.8333C19.4086 16.2917 19.875 15.8253 19.875 15.25V2.75001C19.875 2.17471 19.4086 1.70834 18.8333 1.70834Z"
+                                    stroke="#042F1A" stroke-width="2.08333" stroke-linecap="round"/>
+                            <path d="M1.125 3.27084L10.5 9.00001L19.875 3.27084" stroke="#042F1A" stroke-width="2.08333"
+                                  stroke-linecap="round"/>
+                        </svg>
+
+                        <span class="text-success  ml-2">+info@auxdeliceshoney.com</span>
+                    </li>
+                    <li class="nav-item py-lg-3">
+                        <div class="tw-bg-amber-100 p-2 rounded-circle">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_1_623)">
+                                    <path
+                                            d="M16.875 17.75H7.79719C7.44591 17.7499 7.10579 17.6266 6.83612 17.4015C6.56646 17.1764 6.38435 16.8637 6.32156 16.5181L3.93 3.36594C3.8986 3.19313 3.80755 3.03681 3.67272 2.92425C3.53789 2.81169 3.36783 2.75003 3.19219 2.75H1.5"
+                                            stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                    <path
+                                            d="M7.875 21.5C8.91053 21.5 9.75 20.6605 9.75 19.625C9.75 18.5895 8.91053 17.75 7.875 17.75C6.83947 17.75 6 18.5895 6 19.625C6 20.6605 6.83947 21.5 7.875 21.5Z"
+                                            stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                    <path
+                                            d="M16.875 21.5C17.9105 21.5 18.75 20.6605 18.75 19.625C18.75 18.5895 17.9105 17.75 16.875 17.75C15.8395 17.75 15 18.5895 15 19.625C15 20.6605 15.8395 21.5 16.875 21.5Z"
+                                            stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                    <path
+                                            d="M5.86406 14H17.6344C17.9857 13.9999 18.3258 13.8766 18.5954 13.6515C18.8651 13.4264 19.0472 13.1137 19.11 12.7681L20.25 6.5H4.5"
+                                            stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_1_623">
+                                        <rect width="24" height="24" fill="white" transform="translate(0 0.5)"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="">
+        <div class="carousel" data-flickity='{ "autoPlay": true,"pageDots":false}'>
+            <div class="carousel-cell tw-mx-12">
+                <div
+                        class="hero  text-white flex-column  p-3 d-flex justify-content-center align-items-center tw-rounded-t-xl"
+                        style="background-image: url('images/hero.png')">
+                    <h1 class="font-weight-bolder display-3 py-5 text-image">AUX DELICES</h1>
+                    <p class="mb-5">Savor the Pure Essence of Nature with AUX Delices Honey</p>
+                    <button class="btn btn-warning rounded-pill px-5 tw-mb-20 py-2">Learn more</button>
+                </div>
+                <div class="bg-warning tw-rounded-b-xl tw-h-14"></div>
+            </div>
+            <div class="carousel-cell tw-mx-12">
+                <div
+                        class="hero  text-white flex-column  p-3 d-flex justify-content-center align-items-center tw-rounded-t-xl"
+                        style="background-image: url('images/hero.png')">
+                    <h1 class="font-weight-bolder display-3 py-5 text-image">AUX DELICES</h1>
+                    <p class="mb-5">Savor the Pure Essence of Nature with AUX Delices Honey</p>
+                    <button class="btn btn-warning rounded-pill px-5 tw-mb-20 py-2">Learn more</button>
+                </div>
+                <div class="bg-warning tw-rounded-b-xl tw-h-14"></div>
+            </div>
+            <div class="carousel-cell tw-mx-12">
+                <div
+                        class="hero  text-white flex-column  p-3 d-flex justify-content-center align-items-center tw-rounded-t-xl"
+                        style="background-image: url('images/hero.png')">
+                    <h1 class="font-weight-bolder display-3 py-5 text-image">AUX DELICES</h1>
+                    <p class="mb-5">Savor the Pure Essence of Nature with AUX Delices Honey</p>
+                    <button class="btn btn-warning rounded-pill px-5 tw-mb-20 py-2">Learn more</button>
+                </div>
+                <div class="bg-warning tw-rounded-b-xl tw-h-14"></div>
+            </div>
+        </div>
+    </div>
+    <div id="aboutUs" class=""
+         style="background-image: url('images/ubuki.png');background-repeat: no-repeat;background-size: cover">
+        <div class="tw-bg-green-950 tw-bg-opacity-50">
+            <h1 class="text-white text-center  font-weight-bolder py-4">Why CHOOSE AUX DELICES</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div
+                                class=" justify-content-center align-items-center  card-body rounded-lg d-flex flex-column">
+                    <span><svg width="37" height="38" viewBox="0 0 37 38" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+<path
+        d="M36.5 0V3.97895C36.5 23.1324 25.755 31.8316 12.5 31.8316L8.69672 31.8314C9.11972 25.8385 10.9948 22.2121 15.8917 17.9031C18.2998 15.7841 18.097 14.5608 16.9097 15.2634C8.74252 20.0969 4.68619 26.6315 4.50629 37.0643L4.50001 37.8H0.5C0.5 35.0889 0.731421 32.6268 1.19152 30.3757C0.730501 27.8011 0.5 24.3066 0.5 19.8947C0.5 8.90717 9.45433 0 20.5 0C24.5 0 28.5 1.98947 36.5 0Z"
+        fill="white"/>
+</svg></span>
+                            <h5 class="text-white">Quality and Purity</h5>
+                            <p class="text-white text-justify">Enhance your culinary adventures with AUX Delices' pure,
+                                natural honey. Our commitment to quality
+                                ensures every jar is filled with rich, authentic flavors, capturing the essence of
+                                diverse
+                                floral nectars. This isn't just honey; it's a testament to our dedication to sustainable
+                                beekeeping and environmental responsibility. Choose AUX Delices for a taste of nature's
+                                finest.</p>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <div
+                                class=" justify-content-center align-items-center  card-body rounded-lg d-flex flex-column">
+                    <span><svg width="37" height="36" viewBox="0 0 37 36" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+<path
+        d="M33.5074 12H20.0074C19.1789 12 18.5074 12.6716 18.5074 13.5V22.5C18.5074 23.3284 19.1789 24 20.0074 24H33.5074V30C33.5074 30.8284 32.8358 31.5 32.0074 31.5H5.00732C4.1789 31.5 3.50732 30.8284 3.50732 30V6C3.50732 5.17158 4.1789 4.5 5.00732 4.5H32.0074C32.8358 4.5 33.5074 5.17158 33.5074 6V12ZM23.0074 16.5H27.5074V19.5H23.0074V16.5Z"
+        fill="white"/>
+</svg>
+</span>
+                            <h5 class="text-white font-weight-bolder py-2">Diverse Range of Flavors</h5>
+                            <p class="text-white text-justify">Discover a world of exquisite flavors with AUX Delices'
+                                diverse honey selection. Each variety offers a unique taste experience, from the
+                                delicate
+                                floral notes of clover to the rich depth of buckwheat. Our range caters to all
+                                preferences,
+                                enhancing your dishes with the perfect touch of natural sweetness. Choose AUX Delices
+                                for an
+                                unparalleled journey through the finest nectars nature has to offer.</p>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <div
+                                class=" justify-content-center align-items-center  card-body rounded-lg d-flex flex-column">
+                    <span><svg width="37" height="38" viewBox="0 0 37 38" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+<path
+        d="M36.5 0V3.97895C36.5 23.1324 25.755 31.8316 12.5 31.8316L8.69672 31.8314C9.11972 25.8385 10.9948 22.2121 15.8917 17.9031C18.2998 15.7841 18.097 14.5608 16.9097 15.2634C8.74252 20.0969 4.68619 26.6315 4.50629 37.0643L4.50001 37.8H0.5C0.5 35.0889 0.731421 32.6268 1.19152 30.3757C0.730501 27.8011 0.5 24.3066 0.5 19.8947C0.5 8.90717 9.45433 0 20.5 0C24.5 0 28.5 1.98947 36.5 0Z"
+        fill="white"/>
+</svg></span>
+                            <h5 class="text-white">Quality and Purity</h5>
+                            <p class="text-white text-justify">Enhance your culinary adventures with AUX Delices' pure,
+                                natural honey. Our commitment to quality
+                                ensures every jar is filled with rich, authentic flavors, capturing the essence of
+                                diverse
+                                floral nectars. This isn't just honey; it's a testament to our dedication to sustainable
+                                beekeeping and environmental responsibility. Choose AUX Delices for a taste of nature's
+                                finest.</p>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tw-bg-[#f8f6f0]" id="">
+        <div class="container-fluid">
+            <div class="d-flex p-4 justify-content-between">
+                <h3 class="font-weight-bolder py-1">
+                    <span class="border-bottom tw-border-4 border-warning">PR</span>ODUCTS
+                </h3>
+                <button class="btn btn-warning rounded-pill px-5  py-2">View all</button>
+            </div>
+            <div id="products">
+                <div class="carousel" data-flickity='{ "autoPlay": true,"prevNextButtons": false,"contain":true}'>
+                    <div class="carousel-cell col-lg-4 mx-1 ">
+                        <div
+                                class=" card card-body border-0 text-white h-100 flex-column p-3 d-flex justify-content-center align-items-center tw-rounded-t-xl">
+                            <div class="tw-bg-[#39163d] tw-rounded-2xl">
+                                <img src="images/violet.png" class="img-fluid" alt="violet">
+                            </div>
+                            <span class="text-danger font-weight-lighter">Natural Honey</span>
+                            <h3 class="tw-text-black font-weight-bolder">Sage
+                                Honey</h3>
+                            <p class="text-muted text-center ">Light in color and heavy in body, sage honey is slow to
+                                crystallize and has a mild, delicate
+                                flavor.</p>
+                            <span class="tw-text-black font-weight-bolder">15,000 Frw</span>
+
+                        </div>
+                    </div>
+                    <div class="carousel-cell col-lg-4 mx-1 ">
+                        <div
+                                class=" card card-body border-0 text-white h-100 flex-column p-3 d-flex justify-content-center align-items-center tw-rounded-t-xl">
+                            <div class="tw-bg-[#052543] tw-rounded-2xl">
+                                <img src="images/blue.png" class="img-fluid">
+                            </div>
+                            <span class="text-danger font-weight-lighter">Natural Honey</span>
+                            <h3 class="tw-text-black font-weight-bolder">Eucalyptus Honey</h3>
+                            <p class="text-muted text-center ">This variety has a distinctive herbal flavor and is
+                                believed
+                                to have therapeutic properties.</p>
+                            <span class="tw-text-black font-weight-bolder">15,000 Frw</span>
+
+                        </div>
+                    </div>
+                    <div class="carousel-cell col-lg-4 mx-1 mb-5 ">
+                        <div
+                                class=" card card-body border-0 text-white h-100 flex-column p-3 d-flex justify-content-center align-items-center tw-rounded-t-xl">
+                            <div class="tw-bg-green-950 tw-rounded-2xl">
+                                <img src="images/green.png" class="img-fluid">
+                            </div>
+                            <span class="text-danger font-weight-lighter">Natural Honey</span>
+                            <h3 class="tw-text-black font-weight-bolder">Wildflower Honey</h3>
+                            <p class="text-muted text-center ">Also known as “multifloral” honey, wildflower honey is
+                                made
+                                from the nectar of various species of flowers and plants, leading to a complex flavor
+                                profile that can vary greatly.</p>
+                            <span class="tw-text-black font-weight-bolder">15,000 Frw</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about_us" class="container-fluid px-0 bg-white">
+                <div class="row ">
+                    <div class="col-lg-5  mx-0"
+                         style="background-image: url('images/left_bg.png');background-position: top left;background-repeat: no-repeat;">
+                        <div class="container d-flex justify-content-end">
+                            <img src="images/left.png" class="img-fluid mb-4">
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mx-0 d-flex align-items-start justify-content-center flex-column"
+                         style="background-image: url('images/right_bg.png');background-position: top right;background-repeat: no-repeat;">
+                        <div class="container px-5">
+                            <h1 class="font-weight-bolder py-5"><span class="border-bottom tw-border-4 border-warning">AB</span>OUT
+                                US</h1>
+                            <P class="text-justify ">At Aux Delices, we are passionate about crafting the purest honey,
+                                directly
+                                from nature's bounty. Our bees gather nectar from a variety of flowers, resulting in
+                                honey that
+                                is rich in flavor and aroma. Each jar is a testament to our commitment to quality, from
+                                sustainable beekeeping practices to meticulous processing. Our honey is not just a
+                                sweetener,
+                                but a celebration of nature's sweetness, perfect for enhancing your culinary creations
+                                or
+                                enjoying on its own.
+                            </P>
+                            <button class="btn btn-outline-warning rounded-pill px-5  py-2">Learn more</button>
+                            <div class="card d-flex px-0 justify-content-start card-body border-0">
+                                <h5 class="font-weight-bolder">Certifications</h5>
+                                <div class="">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <div class="card  p-2 tw-rounded-xl tw-bg-green-950/5 h-100 border-0 tw-shadow hover:tw-shadow-lg hover:tw-bg-green-950/20 tw-transition-all  d-flex flex-column align-items-center">
+                                                <img src="icons/violet.png" class="img-fluid">
+                                                <p class="text-center">Beekeeping Certification</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <div class="card p-2 tw-rounded-xl tw-bg-green-950/5 h-100  border-0 tw-shadow hover:tw-shadow-lg hover:tw-bg-green-950/20 tw-transition-all  d-flex flex-column align-items-center">
+                                                <img src="icons/yellow.png" class="img-fluid">
+                                                <p class="text-center"> Honey Processing Certification</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <div class="card p-2 tw-rounded-xl tw-bg-green-950/5 h-100  border-0 tw-shadow hover:tw-shadow-lg hover:tw-bg-green-950/20 tw-transition-all  d-flex flex-column align-items-center">
+                                                <img src="icons/grey.png" class="img-fluid">
+                                                <p class="text-center"> Organic Honey Certification</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 mb-3">
+                                            <div class="card p-2 tw-rounded-xl tw-bg-green-950/5 h-100  border-0 tw-shadow hover:tw-shadow-lg hover:tw-bg-green-950/20 tw-transition-all  d-flex flex-column align-items-center">
+                                                <img src="icons/choco.png" class="img-fluid">
+                                                <p class="text-center">  Manufacturing Certification</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="text-center font-weight-bolder py-4">They say about us</h1>
+            <div class="carousel md:tw-h-80 lg:tw-h-80"
+                 data-flickity='{ "autoPlay": true,"prevNextButtons": false,"contain":true}'>
+                <div class="carousel-cell col-lg-4 mx-1 ">
+                    <div
+                            class="card card-body border-0 text-white align-items-start  flex-column p-3 d-flex tw-rounded-xl">
+                        <div class="d-flex align-items-center ">
+                            <img src="images/girl.png" class="img-fluid">
+                            <span class="text-danger mx-1">Sophia d</span>
+                        </div>
+                        <p class="text-muted text-justify ">As a professional baker, I'm always on the lookout for
+                            quality ingredients that elevate my creations. AUX Delices Honey has become my secret
+                            ingredient. Their clover honey adds a delicate sweetness to my pastries that my customers
+                            love. It's pure, consistent in quality, and absolutely delicious. I'm proud to support a
+                            company that values natural processes and delivers a superior product."</p>
+
+                    </div>
+                </div>
+                <div class="carousel-cell col-lg-4 mx-1 ">
+                    <div
+                            class="card card-body border-0 text-white align-items-start  flex-column p-3 d-flex tw-rounded-xl">
+                        <div class="d-flex align-items-center ">
+                            <img src="images/man_1.png" class="img-fluid">
+                            <span class="text-danger mx-1">Daniel Agger</span>
+                        </div>
+                        <p class="text-muted text-justify ">I've been incorporating Eucalyptus honey from AUX Delices
+                            into my daily health routine for over a year now, and the benefits have been remarkable. Not
+                            only does it taste great, but its natural healing properties have genuinely made a
+                            difference in my overall wellness. It's reassuring to know I'm using a product that is
+                            ethically sourced and produced with the utmost care for quality."</p>
+
+                    </div>
+                </div>
+                <div class="carousel-cell col-lg-4 mx-1 ">
+                    <div
+                            class="card card-body border-0 text-white align-items-start  flex-column p-3 d-flex tw-rounded-xl">
+                        <div class="d-flex align-items-center ">
+                            <img src="images/girl.png" class="img-fluid">
+                            <span class="text-danger mx-2">Salazar</span>
+                        </div>
+                        <p class="text-muted text-justify ">"In our tea shop, we pride ourselves on offering organic and
+                            natural products. AUX Delices Honey has been our preferred honey supplier for two years.
+                            Their wildflower honey is a customer favorite, adding a perfect sweetness to our range of
+                            teas. What sets them apart is not just their exceptional honey, but also their commitment to
+                            sustainability and bee conservation, which resonates deeply with our values and those of our
+                            customers."</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bg-success py-5">
+        <div class="container  tw-rounded-2xl border-0">
+            <div class="row tw-rounded-xl bg-white">
+                <div class="col-lg-7 ">
+                    <div class="card col-lg-8 border-0 card-body">
+                        <h1 class="font-weight-bolder py-4"><span
+                                class="border-bottom tw-border-4 border-warning">CO</span>NTACT
+                            US</h1>
+                        <form>
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter your names"
+                                       class="form-control tw-rounded-lg tw-bg-gray-100 tw-border-slate-100"
+                                       id="exampleInputEmail1" aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Enter your email"
+                                       class="form-control tw-rounded-lg tw-bg-gray-100 tw-border-slate-100"
+                                       id="exampleInputPassword1">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control tw-rounded-lg tw-bg-gray-100 tw-border-slate-100"
+                                          id="exampleFormControlTextarea1" placeholder="Enter your message"
+                                          rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn px-5 btn-warning">Send</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 tw-rounded-r-xl d-flex justify-content-end py-5"
+                     style="background-image: url('images/gradient.png');background-size: contain;background-position:right;background-repeat: no-repeat">
+                    <img src="images/honey_drip.png" class="float-right d-none  w-100 h-100">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <footer class="bg-warning">
+        <div class="container">
+            <div class="row text-success">
+                <div class="col-lg-4 col-md-4">
+                    <img src="images/logo.png" class="img-fluid p-4">
+                    <p>
+                        Stay connected and follow us on social media for the latest updates, promotions, and
+                        mouthwatering Honey pics!
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <h5 class="font-weight-bolder pt-5">About Us</h5>
+                    <p class="text-success">Our Vision</p>
+                    <p class="text-success">Our Mission</p>
+                    <p class="text-success">Products</p>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <h5 class="font-weight-bolder pt-5">Resource</h5>
+                    <p class="text-success">Testimonials</p>
+                    <p class="text-success">Community</p>
+                    <p class="text-success">Careers</p>
+                    <p class="text-success">Careers</p>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <h5 class="font-weight-bolder pt-5">Blog</h5>
+                    <p class="text-success">Company</p>
+                    <p class="text-success">Trending</p>
+                    <p class="text-success">Article</p>
+                </div>
+                <div class="col-lg-2 d-flex justify-content-center align-items-center col-md-2">
+                    <div class="bg-success d-flex p-3 justify-content-center align-items-center rounded-circle">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M23.5 12C23.5 18 19.3313 23.1 13.5813 24V15.45H16.3125L16.8875 12H13.725V9.75C13.725 8.85 14.1562 7.95 15.5938 7.95H17.0312V4.95C17.0312 4.95 15.7375 4.65 14.4437 4.65C11.8562 4.65 10.1312 6.3 10.1312 9.3V12H7.25625V15.45H10.1312V23.85C4.66875 22.95 0.5 18 0.5 12C0.5 5.4 5.675 0 12 0C18.325 0 23.5 5.4 23.5 12Z"
+                                  fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="bg-success d-flex p-3 ml-3 justify-content-center align-items-center rounded-circle">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M23.4225 4.1925C23.1338 3.4725 22.6988 2.74875 21.975 2.025C21.255 1.30125 20.6738 1.0125 19.8075 0.5775C19.0838 0.28875 18.2175 0.1425 16.9125 0H7.08C5.7825 0 4.9125 0.28875 4.18875 0.5775C3.465 0.86625 2.745 1.30125 2.02125 2.025C1.30125 2.745 1.00875 3.32625 0.577497 4.1925C0.288747 4.91625 0.1425 5.7825 0 7.0875V16.92C0 18.2175 0.288747 19.0875 0.577497 19.8113C0.866247 20.5312 1.30125 21.255 2.02125 21.9787C2.745 22.6987 3.3225 22.9913 4.18875 23.4225C4.9125 23.7113 5.77875 23.8575 7.08 24H16.9125C18.2138 24 19.08 23.7113 19.8075 23.4225C20.5275 23.1338 21.2513 22.6987 21.975 21.9787C22.6988 21.255 22.9875 20.6775 23.4225 19.8113C23.7113 19.0875 23.8538 18.2213 24 16.92V7.0875C24 5.78625 23.7113 4.91625 23.4225 4.1925ZM21.8325 16.92C21.8325 17.895 21.6262 18.4613 21.4725 18.8738C21.4462 18.9488 21.42 19.02 21.3975 19.0875C21.3375 19.2075 21.2812 19.3237 21.2325 19.4325C21.0375 19.8487 20.8762 20.19 20.5312 20.5312C20.0963 20.9662 19.665 21.255 19.0875 21.3975C18.6525 21.5438 18.075 21.6863 16.92 21.8325H7.0875C6.10875 21.8325 5.54625 21.6262 5.13375 21.4762C5.05875 21.4463 4.9875 21.42 4.92 21.3975C4.8 21.3375 4.68375 21.285 4.575 21.2325C4.15875 21.0338 3.8175 20.8725 3.4725 20.5275C3.04125 20.0963 2.7525 19.6612 2.60625 19.0837C2.46 18.6488 2.3175 18.0713 2.17125 16.9163V7.0875C2.17125 6.1125 2.3775 5.54625 2.5275 5.13C2.5575 5.055 2.58375 4.98375 2.60625 4.91625C2.66625 4.79625 2.71875 4.68 2.77125 4.57125C2.97 4.15875 3.13125 3.81375 3.4725 3.4725C3.9075 3.0375 4.33875 2.74875 4.92 2.60625C5.355 2.46375 5.9325 2.3175 7.0875 2.17125H16.92C17.8987 2.17125 18.4612 2.3775 18.8775 2.53125C18.9525 2.5575 19.0238 2.58375 19.0913 2.60625C19.2113 2.66625 19.3275 2.7225 19.4363 2.77125C19.8488 2.96625 20.1937 3.1275 20.535 3.4725C20.97 3.9075 21.2588 4.33875 21.4013 4.91625C21.5438 5.35125 21.69 5.92875 21.8362 7.08375V16.92H21.8325Z"
+                                  fill="white"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M11.9999 5.78613C8.53114 5.78613 5.78613 8.53113 5.78613 12.0036C5.78613 15.4724 8.53114 18.2174 11.9999 18.2174C15.4724 18.2174 18.2174 15.4724 18.2174 12.0036C18.2174 8.53113 15.4686 5.78613 11.9999 5.78613ZM11.9999 16.0499C9.83239 16.0499 7.94988 14.3136 7.94988 11.9999C7.94988 9.83238 9.68614 7.94988 11.9999 7.94988C14.1674 7.94988 16.0499 9.68613 16.0499 11.9999C16.0461 14.1674 14.1674 16.0499 11.9999 16.0499Z"
+                                  fill="white"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M19.8073 5.63988C19.8073 6.43863 19.1585 7.08363 18.3598 7.08363C17.561 7.08363 16.916 6.43863 16.916 5.63988C16.916 4.84113 17.561 4.19238 18.3598 4.19238C19.1585 4.19238 19.8073 4.84113 19.8073 5.63988Z"
+                                  fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="position: fixed; bottom: 20px; right: 20px;">
+            <div class="bg-warning py-2 rounded-pill">
+                <a href="#your-chat-link" class="text-success px-3  ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-message" width="26"
+                         height="26x" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M8 9h8"/>
+                        <path d="M8 13h6"/>
+                        <path
+                                d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>
+                    </svg>
+                    Chat
+                </a>
+            </div>
+        </div>
+        <button id="scrollToTopButton" class="bg-warning btn" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-up-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.586 3l-6.586 6.586a2 2 0 0 0 -.434 2.18l.068 .145a2 2 0 0 0 1.78 1.089h2.586v7a2 2 0 0 0 2 2h4l.15 -.005a2 2 0 0 0 1.85 -1.995l-.001 -7h2.587a2 2 0 0 0 1.414 -3.414l-6.586 -6.586a2 2 0 0 0 -2.828 0z" stroke-width="0" fill="currentColor" /></svg></button>
+
+    </footer>
+
+</div>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+    $(document).ready(function () {
+        const scrollToTopButton = document.getElementById('scrollToTopButton');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 10) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        });
+
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior:'smooth'})
+        });
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Remove active class from all navigation items
+                navLinks.forEach(navLink => {
+                    navLink.parentElement.classList.remove('active');
+                });
+
+                // Add active class to the clicked navigation item
+                this.parentElement.classList.add('active');
+
+                // Scroll to the corresponding section
+                const sectionId = this.getAttribute('href');
+                document.querySelector(sectionId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar-nav .nav-item.active {
+    @apply tw-border-b-yellow-600;
+}
+
+.navbar-nav .nav-item>.nav-link {
+    @apply tw-text-black ;
+}
+
+.navbar-nav .nav-item.active>.nav-link {
+    @apply tw-text-yellow-500;
+}
+

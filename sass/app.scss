@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter');
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+$theme-colors: (
+    "dark": $dark,
+    "info": $info,
+    "accent": $accent,
+    "white": $white !important,
+    'silver': $silver,
+    "gradient-info": transparent linear-gradient(284deg, #007E97 0%, #007E97 57%, #076376 100%) 0% 0% no-repeat padding-box
+);
+
+
+footer {
+    background-color: #E9F7FE;
+}
+.hero , .hero p {
+    color: #fff;
+}
+
+.text-image {
+    background-image: url(./assets/ubuki.png);
+    font-weight: bold;
+    background-size: cover;
+    background-clip: text;
+    display: inline-block;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #F59E0B !important;
+}
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #F59E0B !important;
+}
+
+
